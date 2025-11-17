@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Planes de Servicios de Documentos Electrónicos</title>
+    <style>
+        /* --- ESTILOS GENERALES Y MODERNOS --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f8f8;
+            color: #333;
+            margin: 0;
+            padding: 20px 0;
+        }
+        .main-content {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        /* --- ESTILOS DEL LOGO AGREGADO --- */
+        .logo-container {
+            text-align: center;
+            margin-bottom: 0px;
+        }
+        .logo-container img {
+            max-width: 150px; /* Tamaño del logo */
+            height: auto;
+        }
+
+        /* --- ESTILOS CSS PARA LA TABLA DE PLANES --- */
+        .price-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px auto;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .price-table caption {
+			font-size: 1.8em;
+			font-weight: 600;
+			margin-bottom: 20px;
+			background: #1e3a8a;
+			color: white;
+			height: 1.5em;
+		}
+        .price-table th, .price-table td {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 10px 5px;
+            text-align: left;
+        }
+        .price-table th {
+            background-color: #1e3a8a;
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        .price-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .price-table tr:hover {
+            background-color: #e6f0ff;
+        }
+        
+        /* --- ESTILOS DE NOTAS --- */
+        .note {
+            /* width: 100%; ya no es necesario si está dentro de main-content */
+            margin: 10px 0;
+            padding: 15px 20px;
+            border-left: 5px solid #d97706;
+            background-color: #fffbeb;
+            color: #78350f;
+            font-size: 0.9em;
+            border-radius: 5px;
+			box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        .note strong { /* Este estilo se aplicará al texto dentro de <strong> */
+            color: #92400e; /* Color más oscuro para negritas en las notas */
+            font-weight: bold;
+        }
+
+        /* --- ESTILOS DEL FORMULARIO DE CONTACTO --- */
+        .form-container {
+            margin: 10px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid #1e3a8a;
+        }
+        .form-container h3 {
+            color: #1e3a8a;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        .form-group input[type="text"],
+        .form-group select,
+        .form-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #1e3a8a;
+            outline: none;
+        }
+        
+        /* ESTILO PARA EL ASTERISCO ROJO DE OBLIGATORIO */
+        .required-asterisk {
+            color: red;
+            margin-left: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        /* Documentos Checkbox */
+        .checkbox-group label {
+            font-weight: normal;
+            display: inline-block;
+            margin-right: 15px;
+        }
+        
+        /* Contenedor flexible para alinear Label + Nota */
+        .label-with-tooltip {
+            display: flex;
+            align-items: center; 
+        }
+        .label-with-tooltip label {
+            margin-bottom: 0;
+        }
+
+        /* Nota flotante (Tooltip/Hint) */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 10px; 
+            cursor: pointer;
+        }
+        .tooltip-icon {
+            color: #1e3a8a;
+            font-weight: bold;
+            font-size: 0.8em;
+            padding: 1px 1px;
+            border-radius: 50%;
+            background-color: #e6f0ff;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            width: 250px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 10;
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* --- ESTILOS DEL BOTÓN DE WHATSAPP --- */
+        .whatsapp-submit-button {
+            width: 100%;
+            padding: 15px 30px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+        .whatsapp-submit-button:hover {
+            background-color: #1ea04d;
+            transform: translateY(-2px);
+        }
+		
+		/* --- ESTILOS DEL FOOTER ADAPTADO (LIGERO) --- */
+		footer {
+			background-color: white; /* Más ligero, como el formulario y notas */
+			color: #333; /* Color de texto estándar */
+			padding: 30px 20px;
+			text-align: center;
+			font-size: 0.9em;
+			margin-top: 40px;
+			border-top: 5px solid #1e3a8a; /* Línea de color de acento */
+			box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* Sombra sutil */
+		}
+		/* Esto asegura que el contenido dentro del footer no exceda el ancho máximo */
+		.footer-inner { 
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        footer strong {
+            color: #1e3a8a; /* Nombre de la empresa en azul oscuro */
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 10px;
+        }
+		footer a {
+			color: #1e3a8a; /* Links en azul oscuro */
+			text-decoration: underline;
+			transition: color 0.3s;
+		}
+		footer a:hover {
+			color: #5b79c3; /* Tono de azul más claro al pasar el mouse */
+		}
+		.footer-links {
+			margin-top: 15px;
+			padding-top: 15px;
+			border-top: 1px solid #ccc; /* Línea separadora suave */
+		}
+		.footer-links a {
+			margin: 0 15px;
+			display: inline-block;
+		}
+		.contact-info p {
+			margin: 5px 0;
+			line-height: 1.5;
+		}
+    </style>
+</head>
+<body>
+
+	<div class="main-content">
+
+        <div class="logo-container">
+            <img src="logo.png" alt="Logo de la Empresa de Facturación Electrónica">
+        </div>
+		
+		<table class="price-table">
+			<caption>Planes Mensuales de Documentos Electrónicos 🧾</caption>
+			<thead>
+				<tr>
+					<th>Plan</th>
+					<th>Precio Mensual</th>
+					<th>Rango de Documentos</th>
+					<th>Soporte</th>
+					<th>Detalle del Servicio</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td><strong>Plan Básico</strong></td>
+					<td>$30.000 COP</td>
+					<td>1 a 10</td>
+					<td>Básico</td>
+					<td>Solo se envían documentos sin resolver problemas de plataformas.</td>
+				</tr>
+				<tr>
+					<td><strong>Plan Superior</strong></td>
+					<td>$60.000 COP</td>
+					<td>11 a 20</td>
+					<td>Básico</td>
+					<td>Solo se envían documentos sin resolver problemas de plataformas.</td>
+				</tr>
+				<tr>
+					<td><strong>Plan Pyme</strong></td>
+					<td>$115.000 COP</td>
+					<td>21 a 40</td>
+					<td>Avanzado</td>
+					<td>Intentamos resolver inconvenientes contactando directamente al soporte de la plataforma.</td>
+				</tr>
+				<tr>
+					<td><strong>Plan Avanzado</strong></td>
+					<td>$170.000 COP</td>
+					<td>41 a 60</td>
+					<td>Avanzado</td>
+					<td>Intentamos resolver inconvenientes contactando directamente al soporte de la plataforma.</td>
+				</tr>
+				<tr>
+					<td><strong>Empresarial</strong></td>
+					<td>$235.000 COP</td>
+					<td>61 a 90</td>
+					<td>Avanzado</td>
+					<td>Intentamos resolver inconvenientes contactando directamente al soporte de la plataforma.</td>
+				</tr>
+				<tr>
+					<td><strong>Premium</strong></td>
+					<td>$300.000 COP</td>
+					<td>91 en adelante</td>
+					<td>Completo</td>
+					<td>Soporte completo y gestión de documentos electrónicos.</td>
+				</tr>
+			</tbody>
+		</table>
+	
+
+    <div class="note">
+        <strong>Alcance de Documentos:</strong> La cantidad incluye <strong>cualquier</strong> documento <strong>electrónico</strong> que necesite emitir (Factura Electrónica, Documento Soporte Electrónico, Nómina Electrónica y demás documentos existentes).
+    </div>
+
+    <div class="note">
+        <strong>Exclusiones:</strong> Los planes NO incluyen la <strong>causación</strong>, conciliación, cobros, ni <strong>responsabilidades</strong> de contabilidad (conciliación, impuestos).
+    </div>
+
+    <div class="note">
+        <strong>Servicio Contable Adicional:</strong> Si necesita un paquete contable completo (causación, conciliación y presentación de impuestos), por favor <strong>contáctenos</strong>. Definiremos un precio especial por el servicio.
+    </div>
+	
+    <div class="note">
+        <strong>Límite de Documentos:</strong> Si antes de finalizar el mes, <strong>agota</strong> los documentos del plan contratado, <strong>tendrá</strong> que contratar un nuevo plan.
+    </div>
+	
+    <div class="note">
+        <strong>Documentos no Acumulables:</strong> Si finaliza la fecha de contrato y <strong>aún</strong> le quedan documentos disponibles, estos NO <strong>serán acumulables</strong> para el <strong>próximo</strong> mes.
+    </div>
+    
+    <div class="form-container">
+        <h3>🚀 Contáctanos y Empecemos a Facturar</h3>
+        <form id="whatsappForm">
+            
+            <div class="form-group">
+                <label for="nombre">Nombre:<span class="required-asterisk">*</span></label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="planInteres">Plan de interés:<span class="required-asterisk">*</span></label>
+                <select id="planInteres" name="planInteres" required>
+                    <option value="">-- Seleccione un Plan --</option>
+                    <option value="Plan Básico | 1-10 docs | $30.000 Mes">Plan Básico | 1-10 docs | $30.000 Mes</option>
+                    <option value="Plan Superior | 11-20 docs | $60.000 Mes">Plan Superior | 11-20 docs | $60.000 Mes</option>
+                    <option value="Plan Pyme | 21-40 docs | $115.000 Mes">Plan Pyme | 21-40 docs | $115.000 Mes</option>
+                    <option value="Plan Avanzado | 41-60 docs | $170.000 Mes">Plan Avanzado | 41-60 docs | $170.000 Mes</option>
+                    <option value="Empresarial | 61-90 docs | $235.000 Mes">Empresarial | 61-90 docs | $235.000 Mes</option>
+                    <option value="Premium | 91+ docs | $300.000 Mes">Premium | 91+ docs | $300.000 Mes</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Documentos que emite:<span class="required-asterisk">*</span></label>
+                <div class="checkbox-group" id="documentosCheckboxes">
+                    <label><input type="checkbox" name="documentos" value="Factura Electrónica"> Factura Electrónica</label>
+                    <label><input type="checkbox" name="documentos" value="Documento Soporte Electrónico"> Documento Soporte Electrónico</label>
+                    <label><input type="checkbox" name="documentos" value="Nómina Electrónica"> Nómina Electrónica</label>
+                    <input type="hidden" name="doc_validation" id="doc_validation" required> 
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="label-with-tooltip">
+                    <label for="cantDocumentos">
+                        Cantidad de documentos en promedio al mes:<span class="required-asterisk">*</span>
+                    </label>
+                    <div class="tooltip-container">
+                        <span class="tooltip-icon">❗</span>
+                        <span class="tooltip-text">Debe tomar en cuenta el <strong>TOTAL</strong> de todos los documentos electrónicos que emite al mes (Facturas + Documentos Soporte + Nóminas, etc.).</span>
+                    </div>
+                </div>
+                <input type="number" id="cantDocumentos" name="cantDocumentos" min="1" required>
+            </div>
+            
+            <button type="submit" class="whatsapp-submit-button">
+               Enviar Consulta y Contactar por WhatsApp
+            </button>
+        </form>
+    </div>
+    
+	</div> <footer>
+        <div class="footer-inner"> <div class="contact-info">
+                <p><strong>Conficaz</strong></p>
+                <p>Email: <a href="mailto:conficaz@gmail.com">conficaz@gmail.com</a></p>
+                <p>WhatsApp: (+57) 320 8606994</p>
+                <p>Dirección: Bogotá</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#politica-privacidad">Política de Privacidad</a> | 
+                <a href="#terminos-condiciones">Términos y Condiciones</a>
+            </div>
+            
+            <p style="margin-top: 15px;">&copy; 2025 Conficaz. Todos los derechos reservados.</p>
+        </div>
+	</footer>
+
+<script>
+    const WHATSAPP_NUMBER = "573208606994"; // <--- ¡REEMPLAZA ESTE NÚMERO POR EL TUYO! (57 + 10 dígitos)
+    const form = document.getElementById('whatsappForm');
+    const docValidationField = document.getElementById('doc_validation');
+    const docsCheckboxes = document.querySelectorAll('input[name="documentos"]');
+
+    // Función para validar que al menos un checkbox esté marcado
+    function validateCheckboxes() {
+        const checked = document.querySelectorAll('input[name="documentos"]:checked').length > 0;
+        if (checked) {
+            docValidationField.removeAttribute('required');
+            return true;
+        } else {
+            // Esto dispara la validación nativa de HTML5
+            docValidationField.setAttribute('required', 'required');
+            return false;
+        }
+    }
+    
+    // Ejecutar la validación cada vez que se hace clic en un checkbox
+    docsCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', validateCheckboxes);
+    });
+
+
+    form.addEventListener('submit', function(event) {
+        // Asegurarse de que al menos un checkbox esté seleccionado antes de continuar
+        if (!validateCheckboxes()) {
+            event.preventDefault(); 
+            alert("Por favor, seleccione al menos un tipo de documento electrónico que emite.");
+            return;
+        }
+
+        event.preventDefault(); // Detiene el envío normal del formulario
+
+        // 1. Recoger los datos del formulario
+        const nombre = document.getElementById('nombre').value;
+        const plan = document.getElementById('planInteres').value;
+        const cantDocs = document.getElementById('cantDocumentos').value;
+        
+        // Recoger los checkboxes seleccionados
+        const docsCheckboxesSelected = document.querySelectorAll('input[name="documentos"]:checked');
+        let docsEmitidos = [];
+        docsCheckboxesSelected.forEach(checkbox => {
+            docsEmitidos.push(checkbox.value);
+        });
+        const docsStr = docsEmitidos.join(' / ');
+
+
+        // 2. Construir el mensaje estructurado (Formato Tabla/Filas)
+        let message = `¡Hola! Estoy solicitando información para el servicio de facturación electrónica.\n\n`;
+        message += `*Datos de Solicitud:*\n`;
+        message += `===================================\n`;
+        message += `*1. Nombre:* ${nombre}\n`;
+        message += `*2. Plan de Interés:* ${plan}\n`;
+        message += `*3. Documentos (Tipo):* ${docsStr}\n`;
+        message += `*4. Documentos (Cant):* ${cantDocs} en promedio al mes\n`;
+        message += `===================================\n`;
+        message += `Por favor, ayúdame con más detalles sobre este servicio.`;
+
+        // 3. Codificar el mensaje para la URL
+        const encodedMessage = encodeURIComponent(message);
+
+        // 4. Construir la URL de WhatsApp y redirigir
+        const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+        window.open(whatsappURL, '_blank');
+    });
+</script>
+
+</body>
+</html>
